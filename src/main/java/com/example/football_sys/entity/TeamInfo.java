@@ -16,7 +16,7 @@ import lombok.Setter;
 public class TeamInfo {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
     private String name;
     private String division;
     private String phone;

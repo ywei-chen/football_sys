@@ -1,6 +1,6 @@
-package com.example.paymentmapping.service;
-import com.example.paymentmapping.repository.TeamInfoRepo;
-import com.example.paymentmapping.entity.TeamInfo;
+package com.example.football_sys.service;
+import com.example.football_sys.repository.TeamInfoRepo;
+import com.example.football_sys.entity.TeamInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

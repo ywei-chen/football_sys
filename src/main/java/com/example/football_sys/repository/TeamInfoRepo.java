@@ -1,6 +1,6 @@
-package com.example.paymentmapping.repository;
+package com.example.football_sys.repository;
 
-import com.example.paymentmapping.entity.TeamInfo;
+import com.example.football_sys.entity.TeamInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TeamInfoRepo extends JpaRepository<TeamInfo, Long> {

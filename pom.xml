@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>paymentMapping</artifactId>
+    <artifactId>footballSys</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>paymentMapping</name>
-    <description>paymentMapping</description>
+    <name>footballSys</name>
+    <description>footballSys</description>
     <url/>
     <licenses>
         <license/>

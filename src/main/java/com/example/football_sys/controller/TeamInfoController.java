@@ -1,6 +1,6 @@
-package com.example.paymentmapping.controller;
-import com.example.paymentmapping.entity.TeamInfo;
-import com.example.paymentmapping.service.TeamInfoService;
+package com.example.football_sys.controller;
+import com.example.football_sys.entity.TeamInfo;
+import com.example.football_sys.service.TeamInfoService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

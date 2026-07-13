@@ -1,13 +1,13 @@
-package com.example.paymentmapping;
+package com.example.football_sys;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PaymentMappingApplication {
+public class FootballSysApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PaymentMappingApplication.class, args);
+        SpringApplication.run(FootballSysApplication.class, args);
     }
 
 }

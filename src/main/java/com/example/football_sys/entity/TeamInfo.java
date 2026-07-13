@@ -1,4 +1,4 @@
-package com.example.paymentmapping.entity;
+package com.example.football_sys.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

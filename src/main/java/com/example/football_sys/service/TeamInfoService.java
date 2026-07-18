@@ -41,22 +41,30 @@ public class TeamInfoService {
     }
 
     // 新增單筆球隊資訊
-    public boolean createTeam(TeamInfo teamInfo) {
+    public ResponseStatus createTeam(TeamInfo teamInfo) {
+        if(teamInfoRepo.existsByNameAndDivision(teamInfo.getName(), teamInfo.getDivision())){
+            return ResponseStatus.DUPLICATE;
+        }
         try {
+
             TeamInfo res = this.teamInfoRepo.save(teamInfo);
-            return true;
+            return ResponseStatus.SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return ResponseStatus.FAILED;
         }
     }
 
     // Excel匯入資料庫功能
-    public boolean excelAddTeam(MultipartFile file) {
+    public ResponseStatus excelAddTeam(MultipartFile file) {
         try (Workbook wb = WorkbookFactory.create(file.getInputStream())) {
             Sheet sheet = wb.getSheetAt(0);
             for (Row row : sheet) {
                 if(row.getRowNum() == 0) continue;
+                String name = row.getCell(0).getStringCellValue();
+                String division = row.getCell(1).getStringCellValue();
+                if(teamInfoRepo.existsByNameAndDivision(name, division)) continue;
+
                 TeamInfo data = new TeamInfo();
                 data.setName(row.getCell(0).getStringCellValue());
                 data.setDivision(row.getCell(1).getStringCellValue());
@@ -64,10 +72,10 @@ public class TeamInfoService {
                 data.setEmail(row.getCell(3).getStringCellValue());
                 createTeam(data);
             }
-            return true;
+            return ResponseStatus.SUCCESS;
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
+            return ResponseStatus.FAILED;
         }
     }
 }

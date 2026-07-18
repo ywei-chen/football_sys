@@ -1,17 +1,10 @@
 package com.example.football_sys.controller;
 import com.example.football_sys.entity.TeamInfo;
 import com.example.football_sys.service.TeamInfoService;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -19,7 +12,7 @@ public class TeamInfoController {
     private final TeamInfoService teamInfoService;
     public TeamInfoController(TeamInfoService teamInfoService){ this.teamInfoService = teamInfoService; }
 
-    @GetMapping("filterTeams")
+    @GetMapping("/filterTeams")
     public List<TeamInfo> filterTeams(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String division,
@@ -33,14 +26,20 @@ public class TeamInfoController {
     public List<TeamInfo> getTeams() { return teamInfoService.getAllTeam(); }
 
     @PostMapping("/addTeams")
-    public ResponseEntity<Void> addTeams(@RequestBody TeamInfo teamInfo) {
-        boolean success = teamInfoService.createTeam(teamInfo);
-        return success ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
+    public ResponseEntity<String> addTeams(@RequestBody TeamInfo teamInfo) {
+        return switch (teamInfoService.createTeam(teamInfo)) {
+            case SUCCESS -> ResponseEntity.ok().body("新增成功");
+            case DUPLICATE -> ResponseEntity.badRequest().body("球隊重複");
+            case FAILED -> ResponseEntity.internalServerError().body("新增失敗");
+        };
     }
 
     @PostMapping("/importTeams")
-    public ResponseEntity<Void> excelAddTeams(MultipartFile file) {
-        boolean sucess = teamInfoService.excelAddTeam(file);
-        return sucess ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
+    public ResponseEntity<String> excelAddTeams(@RequestParam("file") MultipartFile file) {
+        return switch (teamInfoService.excelAddTeam(file)) {
+            case SUCCESS -> ResponseEntity.ok().body("新增成功");
+            case DUPLICATE -> ResponseEntity.badRequest().body("球隊重複");
+            case FAILED -> ResponseEntity.badRequest().body("新增失敗");
+        };
     }
 }

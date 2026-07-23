@@ -31,6 +31,7 @@ public class TeamInfoController {
             case SUCCESS -> ResponseEntity.ok().body("新增成功");
             case DUPLICATE -> ResponseEntity.badRequest().body("球隊重複");
             case FAILED -> ResponseEntity.internalServerError().body("新增失敗");
+            case NOT_FOUND -> ResponseEntity.badRequest().body("找不到資料");
         };
     }
 
@@ -40,6 +41,7 @@ public class TeamInfoController {
             case SUCCESS -> ResponseEntity.ok().body("新增成功");
             case DUPLICATE -> ResponseEntity.badRequest().body("球隊重複");
             case FAILED -> ResponseEntity.badRequest().body("新增失敗");
+            case NOT_FOUND -> ResponseEntity.badRequest().body("找不到資料");
         };
     }
 }

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface TeamInfoRepo extends JpaRepository<TeamInfo, Long> {
     boolean existsByNameAndDivision(String name, String division);
+
+    boolean existsByNameAndDivisionAndIdNot(String name, String division, Long id);
 }

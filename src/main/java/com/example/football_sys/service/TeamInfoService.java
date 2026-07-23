@@ -37,7 +37,7 @@ public class TeamInfoService {
 
     // 取得所有球隊基本資料
     public List<TeamInfo> getAllTeam() {
-        return this.teamInfoRepo.findAll();
+        return teamInfoRepo.findAll();
     }
 
     // 新增單筆球隊資訊
@@ -46,8 +46,31 @@ public class TeamInfoService {
             return ResponseStatus.DUPLICATE;
         }
         try {
+            TeamInfo res = teamInfoRepo.save(teamInfo);
+            return ResponseStatus.SUCCESS;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatus.FAILED;
+        }
+    }
 
-            TeamInfo res = this.teamInfoRepo.save(teamInfo);
+    // 修改單筆球隊資料
+    public ResponseStatus modifyTeam(Long id, TeamInfo t_new) {
+        TeamInfo t_old = teamInfoRepo.findById(id).orElse(null);
+        if(t_old == null) {
+            return ResponseStatus.NOT_FOUND;
+        }
+        try {
+            String finalName = t_new.getName() != null ? t_new.getName() : t_old.getName();
+            String finalDivision = t_new.getDivision() != null ? t_new.getDivision() : t_old.getDivision();
+            if(teamInfoRepo.existsByNameAndDivisionAndIdNot(finalName, finalDivision, id)) {
+                return ResponseStatus.DUPLICATE;
+            }
+            t_old.setName(finalName);
+            t_old.setDivision(finalDivision);
+            if (t_new.getPhone() != null) t_old.setPhone(t_new.getPhone());
+            if (t_new.getEmail() != null) t_old.setEmail(t_new.getEmail());
+            TeamInfo res = teamInfoRepo.save(t_old);
             return ResponseStatus.SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();
